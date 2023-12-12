@@ -66,7 +66,7 @@
         public void CreateDocument3D()
         {
             var document3D = (ksDocument3D)_kompasObject.Document3D();
-            document3D.Create(false, true);
+            document3D.Create();
         }
 
         /// <summary>
@@ -194,8 +194,9 @@
             double rectWidth,
             double rectHeight)
         {
+            var rectangleObjType = 91;
             var rectangleParam =
-                (ksRectangleParam)_kompasObject.GetParamStruct(91);
+                (ksRectangleParam)_kompasObject.GetParamStruct((short)rectangleObjType);
             var document2D = (ksDocument2D)_kompasObject.ActiveDocument2D();
 
             rectangleParam.x = rectX;

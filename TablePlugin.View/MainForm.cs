@@ -18,7 +18,7 @@
         /// <summary>
         /// Русские названия параметров.
         /// </summary>
-        private static Dictionary<ParameterType.ParamType, string> _paramLocalization;
+        private readonly Dictionary<ParameterType.ParamType, string> _paramLocalization;
 
         /// <summary>
         /// Строитель.
@@ -37,12 +37,6 @@
             new Dictionary<TextBox, ParameterType.ParamType>();
 
         /// <summary>
-        /// Словарь, связывающий <see cref="TextBox"/> с <see cref="Label"/> диапазона значений.
-        /// </summary>
-        private readonly Dictionary<TextBox, Control> _labelToTextBox =
-            new Dictionary<TextBox, Control>();
-
-        /// <summary>
         /// Словарь, связывающий <see cref="TextBox"/> с <see cref="Label"/> ошибки.
         /// </summary>
         private readonly Dictionary<TextBox, Control> _errorLabelToTextBox =
@@ -51,7 +45,7 @@
         /// <summary>
         /// Проверка на наличие ошибок на форме.
         /// </summary>
-        private bool _exceptions;
+        private bool _hasErrors;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса  <see cref="MainForm"/>.
@@ -91,15 +85,6 @@
             _errorLabelToTextBox[ShelfHeightTextBox] = ShelfHeightExceptionLabel;
             _errorLabelToTextBox[SupportSizeTextBox] = SupportSizeExceptionLabel;
             _errorLabelToTextBox[ShelfFloorDistanceTextBox] = ShelfFloorDistanceExceptionLabel;
-
-            _labelToTextBox[TableLengthTextBox] = TableLengthRangeLabel;
-            _labelToTextBox[TableWidthTextBox] = TableWidthRangeLabel;
-            _labelToTextBox[TableHeightTextBox] = TableHeightRangeLabel;
-            _labelToTextBox[ShelfLengthTextBox] = ShelfLengthRangeLabel;
-            _labelToTextBox[ShelfWidthTextBox] = ShelfWidthRangeLabel;
-            _labelToTextBox[ShelfHeightTextBox] = ShelfHeightRangeLabel;
-            _labelToTextBox[SupportSizeTextBox] = SupportSizeRangeLabel;
-            _labelToTextBox[ShelfFloorDistanceTextBox] = ShelfFloorDistanceRangeLabel;
         }
 
         /// <summary>
@@ -119,7 +104,7 @@
         {
             if (!double.TryParse(value, out var parsedValue))
             {
-                _exceptions = true;
+                _hasErrors = true;
             }
 
             dictionary.Add(paramType, new Parameter(parsedValue, minValue, maxValue));
@@ -130,69 +115,58 @@
         /// </summary>
         private void InitializeParameters()
         {
-            try
-            {
-                var dictionary = new Dictionary<ParameterType.ParamType, Parameter>();
+            var dictionary = new Dictionary<ParameterType.ParamType, Parameter>();
 
-                AddParameterToDict(
-                    TableLengthTextBox.Text,
-                    600,
-                    1200,
-                    ParameterType.ParamType.TableLength,
-                    dictionary);
-                AddParameterToDict(
-                    TableWidthTextBox.Text,
-                    600,
-                    1200,
-                    ParameterType.ParamType.TableWidth,
-                    dictionary);
-                AddParameterToDict(
-                    TableHeightTextBox.Text,
-                    400,
-                    500,
-                    ParameterType.ParamType.TableHeight,
-                    dictionary);
-                AddParameterToDict(
-                    ShelfLengthTextBox.Text,
-                    300,
-                    720,
-                    ParameterType.ParamType.ShelfLength,
-                    dictionary);
-                AddParameterToDict(
-                    ShelfWidthTextBox.Text,
-                    300,
-                    720,
-                    ParameterType.ParamType.ShelfWidth,
-                    dictionary);
-                AddParameterToDict(
-                    ShelfHeightTextBox.Text,
-                    10,
-                    40,
-                    ParameterType.ParamType.ShelfHeight,
-                    dictionary);
-                AddParameterToDict(
-                    SupportSizeTextBox.Text,
-                    30,
-                    50,
-                    ParameterType.ParamType.SupportSize,
-                    dictionary);
-                AddParameterToDict(
-                    ShelfFloorDistanceTextBox.Text,
-                    30,
-                    345,
-                    ParameterType.ParamType.ShelfFloorDistance,
-                    dictionary);
+            AddParameterToDict(
+                TableLengthTextBox.Text,
+                600,
+                1200,
+                ParameterType.ParamType.TableLength,
+                dictionary);
+            AddParameterToDict(
+                TableWidthTextBox.Text,
+                600,
+                1200,
+                ParameterType.ParamType.TableWidth,
+                dictionary);
+            AddParameterToDict(
+                TableHeightTextBox.Text,
+                400,
+                500,
+                ParameterType.ParamType.TableHeight,
+                dictionary);
+            AddParameterToDict(
+                ShelfLengthTextBox.Text,
+                300,
+                720,
+                ParameterType.ParamType.ShelfLength,
+                dictionary);
+            AddParameterToDict(
+                ShelfWidthTextBox.Text,
+                300,
+                720,
+                ParameterType.ParamType.ShelfWidth,
+                dictionary);
+            AddParameterToDict(
+                ShelfHeightTextBox.Text,
+                10,
+                40,
+                ParameterType.ParamType.ShelfHeight,
+                dictionary);
+            AddParameterToDict(
+                SupportSizeTextBox.Text,
+                30,
+                50,
+                ParameterType.ParamType.SupportSize,
+                dictionary);
+            AddParameterToDict(
+                ShelfFloorDistanceTextBox.Text,
+                30,
+                345,
+                ParameterType.ParamType.ShelfFloorDistance,
+                dictionary);
 
-                _parameters.ParamsDictionary = dictionary;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    ex.Message,
-                    "Предупреждение",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-            }
+            _parameters.ParamsDictionary = dictionary;
         }
 
         /// <summary>
@@ -221,7 +195,7 @@
         {
             _errorLabelToTextBox[textBox].Text = error;
             textBox.BackColor = Color.FromArgb(255, 182, 193);
-            _exceptions = true;
+            _hasErrors = true;
         }
 
         /// <summary>
@@ -232,7 +206,7 @@
         {
             _errorLabelToTextBox[textBox].Text = string.Empty;
             textBox.BackColor = Color.White;
-            _exceptions = false;
+            _hasErrors = false;
         }
 
         /// <summary>
@@ -368,14 +342,14 @@
                 SetError(textBox, ex.Message);
             }
 
-            _exceptions =
+            _hasErrors =
                 _errorLabelToTextBox.Values.Any(
                     control => !string.IsNullOrEmpty(control.Text));
         }
 
         private void TableBuildButton_Click(object sender, EventArgs e)
         {
-            if (_exceptions == false)
+            if (_hasErrors == false)
             {
                 try
                 {
