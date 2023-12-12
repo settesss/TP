@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.View", "TablePlugin.View\TablePlugin.View.csproj", "{EB955229-D23D-421A-A3BC-F27815183FCD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AFA19A1B-C616-482C-8913-204B24B72A74} = {AFA19A1B-C616-482C-8913-204B24B72A74}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API Libraries", "API Libraries", "{A57D7210-D9AB-4315-907D-0D752F0B75E8}"
+	ProjectSection(SolutionItems) = preProject
+		API Libraries\KAPITypes.dll = API Libraries\KAPITypes.dll
+		API Libraries\Kompas6API5.dll = API Libraries\Kompas6API5.dll
+		API Libraries\Kompas6Constants.dll = API Libraries\Kompas6Constants.dll
+		API Libraries\Kompas6Constants3D.dll = API Libraries\Kompas6Constants3D.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.Connector", "TablePlugin.Connector\TablePlugin.Connector.csproj", "{205EEC48-6BAC-498D-94E5-1D66B4F8B340}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AFA19A1B-C616-482C-8913-204B24B72A74} = {AFA19A1B-C616-482C-8913-204B24B72A74}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.Model", "TablePlugin.Model\TablePlugin.Model.csproj", "{AFA19A1B-C616-482C-8913-204B24B72A74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1CC485CB-58F5-47C5-BDA9-D8A0A66E675A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.UnitTests", "Testing\TablePlugin.UnitTests\TablePlugin.UnitTests.csproj", "{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AFA19A1B-C616-482C-8913-204B24B72A74} = {AFA19A1B-C616-482C-8913-204B24B72A74}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB955229-D23D-421A-A3BC-F27815183FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB955229-D23D-421A-A3BC-F27815183FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB955229-D23D-421A-A3BC-F27815183FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB955229-D23D-421A-A3BC-F27815183FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{205EEC48-6BAC-498D-94E5-1D66B4F8B340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{205EEC48-6BAC-498D-94E5-1D66B4F8B340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{205EEC48-6BAC-498D-94E5-1D66B4F8B340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{205EEC48-6BAC-498D-94E5-1D66B4F8B340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFA19A1B-C616-482C-8913-204B24B72A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA19A1B-C616-482C-8913-204B24B72A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA19A1B-C616-482C-8913-204B24B72A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA19A1B-C616-482C-8913-204B24B72A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649} = {1CC485CB-58F5-47C5-BDA9-D8A0A66E675A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4448CDB-232F-4C99-8534-61E9DC50B5A6}
+	EndGlobalSection
+EndGlobal
