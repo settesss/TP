@@ -69,11 +69,11 @@
 
             if (parameter.Value < parameter.MinValue)
             {
-                error = $" меньше минимального допустимого значения";
+                error = " меньше минимального допустимого значения";
             }
             else if (parameter.Value > parameter.MaxValue)
             {
-                error = $" больше максимального допустимого значения";
+                error = " больше максимального допустимого значения";
             }
 
             return string.IsNullOrEmpty(error);

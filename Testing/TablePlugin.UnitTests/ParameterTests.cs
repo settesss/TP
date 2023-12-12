@@ -16,9 +16,9 @@
         public void Parameter_ConstructObject_ObjectIsBuilt()
         {
             // Arrange
-            var value = 10.0;
-            var minValue = 5.0;
-            var maxValue = 20.0;
+            var value = 105.2;
+            var minValue = 20.2;
+            var maxValue = 105.4;
 
             // Act
             var actual = new Parameter(value, minValue, maxValue);

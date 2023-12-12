@@ -12,6 +12,46 @@
     public class ParametersTests
     {
         /// <summary>
+        /// Проверяет геттер ParamsDictionary.
+        /// </summary>
+        [Test]
+        public void ParamsDictionary_GetValues_ReturnsValue()
+        {
+            // Arrange
+            var paramFirst = new Parameter(20.1, 15.0, 20.2);
+            var paramSecond = new Parameter(24, 10, 35);
+
+            var paramTypeFirst = ParameterType.ParamType.ShelfFloorDistance;
+            var paramTypeSecond = ParameterType.ParamType.TableLength;
+
+            var expected = new Parameters
+            {
+                ParamsDictionary =
+                {
+                    { paramTypeFirst, paramFirst },
+                    { paramTypeSecond, paramSecond }
+                }
+            };
+
+            // Act
+            var actual = expected.ParamsDictionary;
+
+            // Assert
+            Assert.AreEqual(
+                expected.ParamsDictionary.Count,
+                actual.Count,
+                "Количество параметров должно совпадать");
+            Assert.Contains(
+                paramFirst,
+                actual.Values,
+                "Список параметров не содержит parameterFirst");
+            Assert.Contains(
+                paramSecond,
+                actual.Values,
+                "Список параметров не содержит parameterSecond");
+        }
+
+        /// <summary>
         /// Проверяет установку значения null для ParamsDictionary.
         /// </summary>
         [Test]

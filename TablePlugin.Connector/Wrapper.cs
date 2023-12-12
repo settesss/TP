@@ -72,7 +72,7 @@
         /// <summary>
         /// Создает эскиз на плоскости.
         /// </summary>
-        /// <param name="sketchPlane">Плоскость для скетча.</param>
+        /// <param name="sketchPlane">Плоскость для эскиза.</param>
         /// <returns>Созданный скетч.</returns>
         public (ksPart createdPart, ksEntity createdSketch) CreateSketch(
             short sketchPlane)
@@ -82,12 +82,60 @@
             var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
             var ksSketchDefinition = (ksSketchDefinition)sketch.GetDefinition();
             var plane = (ksEntity)part.GetDefaultEntity(sketchPlane);
-
             ksSketchDefinition.SetPlane(plane);
             sketch.Create();
             ksSketchDefinition.BeginEdit();
 
             return (createdPart: part, createdSketch: sketch);
+        }
+
+        /// <summary>
+        /// Строит столик.
+        /// </summary>
+        /// <param name="rectX">Начальная точка, равная ширине стола, деленной на два.</param>
+        /// <param name="rectY">Координата Y, равная высоте столика.</param>
+        /// <param name="rectWidth">Размер ножки.</param>
+        /// <param name="tableLength">Длина столика.</param>
+        /// <param name="tableWidth">Ширина столика.</param>
+        public void CreateTable(
+            double rectX,
+            double rectY,
+            double rectWidth,
+            double tableLength,
+            double tableWidth)
+        {
+            var halfValue = 2;
+            var sketchTuple = CreateSketch((short)Obj3dType.o3d_planeXOY);
+            var createdPart = sketchTuple.createdPart;
+            var createdSketch = sketchTuple.createdSketch;
+            var ksSketchDefinition =
+                (ksSketchDefinition)createdSketch.GetDefinition();
+            var planeXoz =
+                (ksEntity)createdPart.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
+            var planeYoz =
+                (ksEntity)createdPart.GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
+
+            CreateRectangle(rectX, 0, rectWidth, rectWidth);
+
+            ksSketchDefinition.EndEdit();
+
+            var extrude = ExtrudeOperation(
+                createdPart,
+                createdSketch,
+                rectY);
+
+            MirrorOperation(createdPart, extrude, planeYoz);
+
+            var planeOffset =
+                CreateOffsetPlane(
+                    createdPart,
+                    planeXoz,
+                    tableLength / halfValue);
+            var mirrorEntity = MirrorOperation(createdPart, extrude, planeOffset);
+
+            MirrorOperation(createdPart, mirrorEntity, planeYoz);
+
+            CreateTop(rectX, rectY, rectWidth, tableLength, tableWidth);
         }
 
         /// <summary>
@@ -127,58 +175,10 @@
                 (ksSketchDefinition)sketch.GetDefinition();
 
             CreateRectangle(-rectX, -rectY, shelfWidth, rectHeight);
+
             ksSketchTopDefinition.EndEdit();
 
             ExtrudeOperation(part, sketch, shelfLength);
-        }
-
-        /// <summary>
-        /// Строит столик.
-        /// </summary>
-        /// <param name="rectX">Начальная точка, равная ширине стола, деленной на два.</param>
-        /// <param name="rectY">Координата Y, равная высоте столика.</param>
-        /// <param name="rectWidth">Размер ножки.</param>
-        /// <param name="tableLength">Длина столика.</param>
-        /// <param name="tableWidth">Ширина столика.</param>
-        public void CreateTable(
-            double rectX,
-            double rectY,
-            double rectWidth,
-            double tableLength,
-            double tableWidth)
-        {
-            var halfValue = 2;
-
-            var sketchTuple = CreateSketch((short)Obj3dType.o3d_planeXOY);
-            var createdPart = sketchTuple.createdPart;
-            var createdSketch = sketchTuple.createdSketch;
-            var ksSketchDefinition =
-                (ksSketchDefinition)createdSketch.GetDefinition();
-            var planeYoz =
-                (ksEntity)createdPart.GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
-            var planeXoz =
-                (ksEntity)createdPart.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
-
-            CreateRectangle(rectX, 0, rectWidth, rectWidth);
-            ksSketchDefinition.EndEdit();
-
-            var extrude = ExtrudeOperation(
-                createdPart,
-                createdSketch,
-                rectY);
-
-            MirrorOperation(createdPart, extrude, planeYoz);
-
-            var planeOffset =
-                CreateOffsetPlane(
-                    createdPart,
-                    planeXoz,
-                    tableLength / halfValue);
-            var mirrorEntity = MirrorOperation(createdPart, extrude, planeOffset);
-
-            MirrorOperation(createdPart, mirrorEntity, planeYoz);
-
-            CreateTop(rectX, rectY, rectWidth, tableLength, tableWidth);
         }
 
         /// <summary>
@@ -204,7 +204,6 @@
             rectangleParam.width = rectWidth;
             rectangleParam.height = rectHeight;
             rectangleParam.style = 1;
-
             document2D.ksRectangle(rectangleParam, 0);
         }
 
@@ -252,7 +251,6 @@
             extrusionDefinition.directionType = (short)Direction_Type.dtNormal;
             extrusionDefinition.SetSideParam(true, (short)End_Type.etBlind, depth);
             extrusionDefinition.SetSketch(sketch);
-
             entityExtrude.Create();
 
             return entityExtrude;
@@ -299,6 +297,7 @@
                 (ksSketchDefinition)createdSketchTop.GetDefinition();
 
             CreateRectangle(-rectX - rectWidth, -rectY, tableWidth, rectWidth);
+
             ksSketchTopDefinition.EndEdit();
 
             ExtrudeOperation(createdPartTop, createdSketchTop, tableLength);
