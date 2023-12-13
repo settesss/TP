@@ -161,10 +161,11 @@
             var part = (ksPart)document3D.GetPart((short)Part_Type.pTop_Part);
             var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
             var ksSketchDefinition = (ksSketchDefinition)sketch.GetDefinition();
-            var plane = (ksEntity)part.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
+            var planeXoz = (ksEntity)part.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
+            var planeXoy = (ksEntity)part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
             var offsetPlane = CreateOffsetPlane(
                 part,
-                plane,
+                planeXoz,
                 (tableLength + legSize - shelfLength) / 2);
 
             ksSketchDefinition.SetPlane(offsetPlane);
@@ -179,6 +180,43 @@
             ksSketchTopDefinition.EndEdit();
 
             ExtrudeOperation(part, sketch, shelfLength);
+
+            var braceOffsetPlane = CreateOffsetPlane(
+                part,
+                planeXoy,
+                rectY);
+
+            var halfValue = 2;
+            var sketchTuple = CreateSketch((short)Obj3dType.o3d_planeXOY);
+            var createdPart = sketchTuple.createdPart;
+            var createdSketch = sketchTuple.createdSketch;
+            var ksBraceSketchDefinition =
+                (ksSketchDefinition)createdSketch.GetDefinition();
+            var planeYoz =
+                (ksEntity)createdPart.GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
+
+            CreateRectangle(-rectX, (tableLength + legSize - shelfLength) / 2, 4, 4);
+
+            ksBraceSketchDefinition.EndEdit();
+
+            var extrude = ExtrudeOperation(
+                createdPart,
+                createdSketch,
+                rectY);
+            var extrudeDefinition = (ksBossExtrusionDefinition)extrude.GetDefinition();
+            extrudeDefinition.SetSideParam(true, 1);
+            extrude.Create();
+
+            MirrorOperation(createdPart, extrude, planeYoz);
+
+            var planeOffset =
+                CreateOffsetPlane(
+                    createdPart,
+                    offsetPlane,
+                    shelfLength / halfValue);
+            var mirrorEntity = MirrorOperation(createdPart, extrude, planeOffset);
+
+            MirrorOperation(createdPart, mirrorEntity, planeYoz);
         }
 
         /// <summary>

@@ -5,6 +5,8 @@
     /// </summary>
     public class Validator
     {
+        private const int DistanceCoefficient = 2;
+
         /// <summary>
         /// Проверяет на корректность значения параметров, связанных с полкой.
         /// </summary>
@@ -41,7 +43,7 @@
             double legSize,
             double shelfHeight)
         {
-            return tableHeight - (2 * legSize) - shelfHeight;
+            return tableHeight - (DistanceCoefficient * legSize) - shelfHeight;
         }
 
         /// <summary>
@@ -53,7 +55,7 @@
         /// <returns>Максимальное значение параметра полки.</returns>
         public static double CalculateShelfMaxValue(double tableSize, double legSize)
         {
-            return tableSize - (2 * legSize);
+            return tableSize - (DistanceCoefficient * legSize);
         }
 
         /// <summary>
