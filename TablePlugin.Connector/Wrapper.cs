@@ -309,15 +309,8 @@
             double centerY,
             double radius)
         {
-            // var circleObjType = 20;
-            // var circleParam =
-            // (ksRectangleParam)_kompasObject.GetParamStruct((short)circleObjType);
             var document2D = (ksDocument2D)_kompasObject.ActiveDocument2D();
 
-            // circleParam.x = centerX;
-            // circleParam.y = centerY;
-            // circleParam.height = radius;
-            // circleParam.style = 1;
             document2D.ksCircle(centerX, centerY, radius, 1);
         }
 
