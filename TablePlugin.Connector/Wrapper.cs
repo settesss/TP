@@ -148,6 +148,7 @@
         /// <param name="shelfLength">Длина полки.</param>
         /// <param name="shelfWidth">Ширина полки.</param>
         /// <param name="legSize">Размер ножки.</param>
+        /// <param name="bracingSize">Размер крепления.</param>
         public void CreateShelf(
             double rectX,
             double rectY,
@@ -155,7 +156,8 @@
             double tableLength,
             double shelfLength,
             double shelfWidth,
-            double legSize)
+            double legSize,
+            double bracingSize)
         {
             var halfValue = 2;
             var document3D = (ksDocument3D)_kompasObject.ActiveDocument3D();
@@ -190,7 +192,8 @@
                 rectY,
                 tableLength,
                 shelfLength,
-                legSize);
+                legSize,
+                bracingSize);
         }
 
         /// <summary>
@@ -204,6 +207,7 @@
         /// <param name="tableLength">Длина столика.</param>
         /// <param name="shelfLength">Длина полки.</param>
         /// <param name="legSize">Размер ножки.</param>
+        /// <param name="bracingSize">Размер крепления.</param>
         private void CreateBracings(
             ksPart part,
             ksEntity plane,
@@ -212,7 +216,8 @@
             double rectY,
             double tableLength,
             double shelfLength,
-            double legSize)
+            double legSize,
+            double bracingSize)
         {
             var halfValue = 2;
             var bracingSketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
@@ -233,8 +238,8 @@
             CreateRectangle(
                 -rectX,
                 (tableLength + legSize - shelfLength) / halfValue,
-                legSize / halfValue,
-                legSize / halfValue);
+                bracingSize,
+                bracingSize);
 
             ksBracingSketchDefinition.EndEdit();
             ksBraceSketchDefinition.EndEdit();

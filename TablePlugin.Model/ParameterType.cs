@@ -48,7 +48,12 @@
             /// <summary>
             /// Расстояние от полки до пола.
             /// </summary>
-            ShelfFloorDistance
+            ShelfFloorDistance,
+
+            /// <summary>
+            /// Размер крепления для полки.
+            /// </summary>
+            BracingSize
         }
     }
 }
