@@ -139,7 +139,16 @@
 
             CreateTop(rectX, rectY, rectWidth, tableLength, tableWidth);
 
-            CreateWheels(rectX, rectWidth, wheelSize, rectWidth, planeOffset, planeYoz);
+            if (wheelSize != 0)
+            {
+                CreateWheels(
+                    rectX,
+                    rectWidth,
+                    wheelSize,
+                    rectWidth,
+                    planeOffset,
+                    planeYoz);
+            }
         }
 
         /// <summary>

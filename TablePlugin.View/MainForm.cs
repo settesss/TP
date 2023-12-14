@@ -65,7 +65,7 @@
                 { ParameterType.ParamType.ShelfHeight, "Высота полки" },
                 { ParameterType.ParamType.SupportSize, "Размер опоры" },
                 { ParameterType.ParamType.ShelfFloorDistance, "Расстояние до пола" },
-                { ParameterType.ParamType.BracingSize, "Размер крепления"},
+                { ParameterType.ParamType.BracingSize, "Размер крепления" },
                 { ParameterType.ParamType.WheelSize, "Размер колесиков" }
             };
 
