@@ -49,6 +49,8 @@
                 parameters.ParamsDictionary[ParameterType.ParamType.TableHeight].Value;
             var supportSize =
                 parameters.ParamsDictionary[ParameterType.ParamType.SupportSize].Value;
+            var wheelSize =
+                parameters.ParamsDictionary[ParameterType.ParamType.WheelSize].Value;
 
             _wrapper.CreateTable(
                (tableWidth / (HalfValue * ConvertMillimeters)) -
@@ -56,7 +58,8 @@
                tableHeight / ConvertMillimeters,
                supportSize / ConvertMillimeters,
                tableLength / ConvertMillimeters,
-               tableWidth / ConvertMillimeters);
+               tableWidth / ConvertMillimeters,
+               wheelSize / ConvertMillimeters);
         }
 
         /// <summary>

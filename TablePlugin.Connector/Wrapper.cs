@@ -97,12 +97,14 @@
         /// <param name="rectWidth">Размер ножки.</param>
         /// <param name="tableLength">Длина столика.</param>
         /// <param name="tableWidth">Ширина столика.</param>
+        /// <param name="wheelSize">Размер колесика.</param>
         public void CreateTable(
             double rectX,
             double rectY,
             double rectWidth,
             double tableLength,
-            double tableWidth)
+            double tableWidth,
+            double wheelSize)
         {
             var halfValue = 2;
             var sketchTuple = CreateSketch((short)Obj3dType.o3d_planeXOY);
@@ -136,6 +138,8 @@
             MirrorOperation(createdPart, mirrorEntity, planeYoz);
 
             CreateTop(rectX, rectY, rectWidth, tableLength, tableWidth);
+
+            CreateWheels(rectX, rectWidth, wheelSize, rectWidth, planeOffset, planeYoz);
         }
 
         /// <summary>
@@ -291,6 +295,23 @@
             document2D.ksRectangle(rectangleParam, 0);
         }
 
+        private static void CreateCircle(
+            double centerX,
+            double centerY,
+            double radius)
+        {
+            // var circleObjType = 20;
+            // var circleParam =
+            // (ksRectangleParam)_kompasObject.GetParamStruct((short)circleObjType);
+            var document2D = (ksDocument2D)_kompasObject.ActiveDocument2D();
+
+            // circleParam.x = centerX;
+            // circleParam.y = centerY;
+            // circleParam.height = radius;
+            // circleParam.style = 1;
+            document2D.ksCircle(centerX, centerY, radius, 1);
+        }
+
         /// <summary>
         /// Отзеркаливает объект.
         /// </summary>
@@ -385,6 +406,51 @@
             ksSketchTopDefinition.EndEdit();
 
             ExtrudeOperation(createdPartTop, createdSketchTop, tableLength);
+        }
+
+        /// <summary>
+        /// Строит колесики.
+        /// </summary>
+        /// <param name="rectX">Координата X начала построения.</param>
+        /// <param name="rectWidth">Размер ножки.</param>
+        /// <param name="wheelSize">Размер колесика.</param>
+        /// <param name="depth">Глубина выдавливания.</param>
+        /// <param name="xozMirrorPlane">Плоскость XOZ для зеркального отображения.</param>
+        /// <param name="yozMirrorPlane">Плоскость YOZ для зеркального отображения.</param>
+        private void CreateWheels(
+            double rectX,
+            double rectWidth,
+            double wheelSize,
+            double depth,
+            ksEntity xozMirrorPlane,
+            ksEntity yozMirrorPlane)
+        {
+            var document3D = (ksDocument3D)_kompasObject.ActiveDocument3D();
+            var part = (ksPart)document3D.GetPart((short)Part_Type.pTop_Part);
+            var planeXoz =
+                (ksEntity)part.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
+
+            var sketchWheels = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
+            var ksSketchWheelsDefinition = (ksSketchDefinition)sketchWheels.GetDefinition();
+
+            ksSketchWheelsDefinition.SetPlane(planeXoz);
+            sketchWheels.Create();
+            ksSketchWheelsDefinition.BeginEdit();
+
+            CreateCircle(rectX + (rectWidth / 2), wheelSize, wheelSize);
+
+            ksSketchWheelsDefinition.EndEdit();
+
+            var extrude = ExtrudeOperation(
+                part,
+                sketchWheels,
+                depth);
+
+            MirrorOperation(part, extrude, yozMirrorPlane);
+
+            var mirrorEntity = MirrorOperation(part, extrude, xozMirrorPlane);
+
+            MirrorOperation(part, mirrorEntity, yozMirrorPlane);
         }
     }
 }

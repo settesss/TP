@@ -53,7 +53,12 @@
             /// <summary>
             /// Размер крепления для полки.
             /// </summary>
-            BracingSize
+            BracingSize,
+
+            /// <summary>
+            /// Размер колесика.
+            /// </summary>
+            WheelSize
         }
     }
 }

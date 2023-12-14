@@ -65,7 +65,8 @@
                 { ParameterType.ParamType.ShelfHeight, "Высота полки" },
                 { ParameterType.ParamType.SupportSize, "Размер опоры" },
                 { ParameterType.ParamType.ShelfFloorDistance, "Расстояние до пола" },
-                { ParameterType.ParamType.BracingSize, "Размер крепления"}
+                { ParameterType.ParamType.BracingSize, "Размер крепления"},
+                { ParameterType.ParamType.WheelSize, "Размер колесиков" }
             };
 
             _textBoxesTypes[TableLengthTextBox] = ParameterType.ParamType.TableLength;
@@ -78,6 +79,7 @@
             _textBoxesTypes[ShelfFloorDistanceTextBox] =
                 ParameterType.ParamType.ShelfFloorDistance;
             _textBoxesTypes[BracingSizeTextBox] = ParameterType.ParamType.BracingSize;
+            _textBoxesTypes[WheelSizeTextBox] = ParameterType.ParamType.WheelSize;
 
             _errorLabelToTextBox[TableLengthTextBox] = TableLengthExceptionLabel;
             _errorLabelToTextBox[TableWidthTextBox] = TableWidthExceptionLabel;
@@ -88,6 +90,7 @@
             _errorLabelToTextBox[SupportSizeTextBox] = SupportSizeExceptionLabel;
             _errorLabelToTextBox[ShelfFloorDistanceTextBox] = ShelfFloorDistanceExceptionLabel;
             _errorLabelToTextBox[BracingSizeTextBox] = BracingSizeExceptionLabel;
+            _errorLabelToTextBox[WheelSizeTextBox] = WheelSizeExceptionLabel;
         }
 
         /// <summary>
@@ -173,6 +176,12 @@
                 20,
                 45,
                 ParameterType.ParamType.BracingSize,
+                dictionary);
+            AddParameterToDict(
+                WheelSizeTextBox.Text,
+                0,
+                70,
+                ParameterType.ParamType.WheelSize,
                 dictionary);
 
             _parameters.ParamsDictionary = dictionary;
