@@ -30,6 +30,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.UnitTests", "Te
 		{AFA19A1B-C616-482C-8913-204B24B72A74} = {AFA19A1B-C616-482C-8913-204B24B72A74}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.StressTesting", "Testing\TablePlugin.StressTesting\TablePlugin.StressTesting.csproj", "{4BF29C6B-9737-43A3-89AD-B3627CE3F7C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{205EEC48-6BAC-498D-94E5-1D66B4F8B340} = {205EEC48-6BAC-498D-94E5-1D66B4F8B340}
+		{AFA19A1B-C616-482C-8913-204B24B72A74} = {AFA19A1B-C616-482C-8913-204B24B72A74}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,12 +58,17 @@ Global
 		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF29C6B-9737-43A3-89AD-B3627CE3F7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF29C6B-9737-43A3-89AD-B3627CE3F7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF29C6B-9737-43A3-89AD-B3627CE3F7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF29C6B-9737-43A3-89AD-B3627CE3F7C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CCD90C32-5AA7-41F4-A0B9-2001F70C7649} = {1CC485CB-58F5-47C5-BDA9-D8A0A66E675A}
+		{4BF29C6B-9737-43A3-89AD-B3627CE3F7C5} = {1CC485CB-58F5-47C5-BDA9-D8A0A66E675A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4448CDB-232F-4C99-8534-61E9DC50B5A6}
