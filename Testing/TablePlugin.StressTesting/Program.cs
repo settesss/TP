@@ -14,7 +14,6 @@
         {
             var builder = new TableBuilder();
             var stopWatch = new Stopwatch();
-            stopWatch.Start();
             var parameters = new Parameters();
             parameters.ParamsDictionary = new Dictionary<ParameterType.ParamType, Parameter>()
             {
@@ -30,20 +29,25 @@
                 { ParameterType.ParamType.WheelSize, new Parameter(70, 0, 70) },
             };
             var streamWriter = new StreamWriter($"log.txt", true);
-            Process currentProcess = System.Diagnostics.Process.GetCurrentProcess();
+            Process currentProcess = Process.GetCurrentProcess();
             var count = 0;
 
-            while (count < 71)
-            {
-                const double gigabyteInByte = 0.000000000931322574615478515625;
-                builder.Build(parameters);
-                var computerInfo = new ComputerInfo();
-                var usedMemory = (computerInfo.TotalPhysicalMemory - computerInfo.AvailablePhysicalMemory) * gigabyteInByte;
-                streamWriter.WriteLine($"{++count}\t{stopWatch.Elapsed:hh\\:mm\\:ss}\t{usedMemory}");
-                streamWriter.Flush();
+            while (count < 70)
+            { 
+                const double gigabyteInByte = 0.000000000931322574615478515625; 
+                stopWatch.Start();
+                builder.Build(parameters); 
+                var computerInfo = new ComputerInfo(); 
+                var usedMemory = (computerInfo.TotalPhysicalMemory
+                    - computerInfo.AvailablePhysicalMemory)
+                    * gigabyteInByte; 
+                stopWatch.Stop();
+                stopWatch.Reset(); 
+                streamWriter.WriteLine(
+                    $"{++count}\t{stopWatch.Elapsed:hh\\:mm\\:ss}\t{usedMemory}"); 
+                streamWriter.Flush(); 
             }
 
-            stopWatch.Stop();
             streamWriter.Close();
             streamWriter.Dispose();
             Console.Write($"End {new ComputerInfo().TotalPhysicalMemory}");
